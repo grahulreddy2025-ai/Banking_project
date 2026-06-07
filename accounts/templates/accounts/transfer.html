@@ -1,0 +1,36 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Transfer — NeoBank{% endblock %}
+
+{% block content %}
+<div class="page-header">Transfer Money</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card-box mb-3">
+            <div class="text-muted small">Available Balance</div>
+            <div class="fw-bold fs-4">₹{{ account.balance }}</div>
+            <div class="text-muted small mt-1">From: {{ account.masked_card }}</div>
+        </div>
+        <div class="card-box">
+            <h6 class="fw-bold mb-3">Send Money</h6>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Recipient Card Number</label>
+                    {{ form.receiver_card }}
+                    {% if form.receiver_card.errors %}
+                        <div class="text-danger small mt-1">{{ form.receiver_card.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Amount (₹)</label>
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                        <div class="text-danger small mt-1">{{ form.amount.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-accent w-100">Transfer</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

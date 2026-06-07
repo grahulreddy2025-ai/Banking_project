@@ -1,0 +1,49 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Register — NeoBank{% endblock %}
+
+{% block content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-4">
+    <div class="card-box" style="width:100%; max-width:480px;">
+        <div class="text-center mb-4">
+            <h2 style="color:#1a1a2e; font-weight:700;">
+                <span style="color:#00d4aa;">Neo</span>Bank
+            </h2>
+            <p class="text-muted small">Create your account — card generated automatically</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label class="form-label small fw-semibold text-secondary">First Name</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="text-danger small">{{ form.first_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Last Name</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="text-danger small">{{ form.last_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% for field in form %}
+                {% if field.name != 'first_name' and field.name != 'last_name' %}
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-accent w-100 mt-2">Create Account</button>
+        </form>
+        <p class="text-center text-muted small mt-3">
+            Already have one? <a href="{% url 'login' %}" style="color:#00d4aa;">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

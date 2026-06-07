@@ -1,0 +1,28 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Add Money — NeoBank{% endblock %}
+
+{% block content %}
+<div class="page-header">Add Money</div>
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card-box mb-3">
+            <div class="text-muted small">Current Balance</div>
+            <div class="fw-bold fs-4">₹{{ account.balance }}</div>
+        </div>
+        <div class="card-box">
+            <h6 class="fw-bold mb-3">Deposit Funds</h6>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Amount (₹)</label>
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                        <div class="text-danger small mt-1">{{ form.amount.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-accent w-100">Deposit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
